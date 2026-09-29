@@ -1,0 +1,28 @@
+services:
+  openspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: openspace-openspace:latest
+    container_name: openspace-mcp
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - OPENSPACE_MODEL=${OPENSPACE_MODEL:-openai/antigravity/gemini-3.7-flash-tiered}
+      - OPENSPACE_LLM_API_BASE=${OPENSPACE_LLM_API_BASE:-http://192.168.85.129:20128/v1}
+      - OPENSPACE_LLM_API_KEY=${OPENSPACE_LLM_API_KEY:-dummy}
+      - OPENAI_API_BASE=${OPENSPACE_LLM_API_BASE:-http://192.168.85.129:20128/v1}
+      - OPENAI_API_KEY=${OPENSPACE_LLM_API_KEY:-dummy}
+      - OPENSPACE_CLOUD_MODE=off
+    volumes:
+      - openspace_skills:/app/skills
+      - openspace_workspace:/app/workspace
+      - openspace_data:/app/.openspace
+      - openspace_logs:/app/logs
+
+volumes:
+  openspace_skills:
+  openspace_workspace:
+  openspace_data:
+  openspace_logs:

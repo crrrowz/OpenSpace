@@ -126,6 +126,10 @@ except (TypeError, ValueError):
     pass
 
 mcp = FastMCP("OpenSpace", **_fastmcp_kwargs)
+if hasattr(mcp, "settings") and hasattr(mcp.settings, "transport_security"):
+    mcp.settings.transport_security.enable_dns_rebinding_protection = False
+    mcp.settings.transport_security.allowed_hosts = ["*"]
+    mcp.settings.transport_security.allowed_origins = ["*"]
 
 _openspace_instance = None
 _openspace_lock = asyncio.Lock()
