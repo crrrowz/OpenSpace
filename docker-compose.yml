@@ -7,13 +7,14 @@ services:
     container_name: openspace-mcp
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "${OPENSPACE_MCP_PORT:-28580}:8080"
+      - "${OPENSPACE_GUI_PORT:-28588}:7788"
     environment:
       - OPENSPACE_MODEL=${OPENSPACE_MODEL:-openai/antigravity/gemini-3.7-flash-tiered}
       - OPENSPACE_LLM_API_BASE=${OPENSPACE_LLM_API_BASE:-http://192.168.85.129:20128/v1}
-      - OPENSPACE_LLM_API_KEY=${OPENSPACE_LLM_API_KEY:-dummy}
+      - OPENSPACE_LLM_API_KEY=${OPENSPACE_LLM_API_KEY:-sk-7370f99a4461f1ca-bade15-483fe396}
       - OPENAI_API_BASE=${OPENSPACE_LLM_API_BASE:-http://192.168.85.129:20128/v1}
-      - OPENAI_API_KEY=${OPENSPACE_LLM_API_KEY:-dummy}
+      - OPENAI_API_KEY=${OPENSPACE_LLM_API_KEY:-sk-7370f99a4461f1ca-bade15-483fe396}
       - OPENSPACE_CLOUD_MODE=off
     volumes:
       - openspace_skills:/app/skills
